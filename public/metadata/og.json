@@ -1,0 +1,11 @@
+{
+  "name": "Lump NFT",
+  "description": "This Lump NFT is your key to the staking ecosystem. Stake this NFT to earn daily rewards in $BNK tokens.",
+  "image": "https://critterholes.xyz/metadata/og.png",
+  "attributes": [
+    {
+      "trait_type": "Earning Rate",
+      "value": "100 $BNK per day"
+    }
+  ]
+}
