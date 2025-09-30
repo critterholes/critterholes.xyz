@@ -1,20 +1,38 @@
-// src/wagmi.ts
+import { createAppKit } from "@reown/appkit/react";
+import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
+import { base } from "@reown/appkit/networks";
+import { farcasterMiniApp as miniAppConnector } from '@farcaster/miniapp-wagmi-connector';
 
-import { createConfig, http } from 'wagmi'
-import { base } from 'wagmi/chains' 
-import { farcasterMiniApp as miniAppConnector } from '@farcaster/miniapp-wagmi-connector'
-import { metaMask, walletConnect } from '@wagmi/connectors'
+const projectId = "cd169b99d42633d1d81f5aee613d0eed";
 
-const projectId = 'cd169b99d42633d1d81f5aee613d0eed'; 
-    
-export const config = createConfig({
-  chains: [base], 
-  transports: {
-    [base.id]: http(),
-  },
+export const wagmiAdapter = new WagmiAdapter({
+  projectId,
+  networks: [base],
+  ssr: true,
   connectors: [
-    metaMask(),
-    walletConnect({ projectId }),
     miniAppConnector(),
-  ]
-})
+  ],
+});
+
+createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [base],
+  projectId,
+  metadata: {
+    name: "Critter Hole",
+    description: "Critter Hole Game on Base",
+    url: "https://critterholes.xyz",
+    icons: ["https://critterholes.xyz/logo.png"],
+  },
+  features: {
+    email: false,
+    socials: false,
+    swaps: false,
+    onramp: false,
+    history: false,
+    send: true,
+  },
+  themeMode: "light",
+});
+
+export const config = wagmiAdapter.wagmiConfig;

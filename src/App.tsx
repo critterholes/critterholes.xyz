@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { base } from 'wagmi/chains'; 
 import { sdk } from "@farcaster/miniapp-sdk";
+
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import GamePage from './pages/GamePage';
 import InfoPage from './pages/InfoPage';
-import LeaderboardPage from './pages/LeaderboardPage';
+import { UserPage } from './pages/UserPage'; 
 import { ConnectWalletPage } from './pages/ConnectWalletPage';
 import { WrongNetworkPage } from './pages/WrongNetworkPage';
 import MintPage from './pages/MintPage';
@@ -40,7 +41,7 @@ function App() {
       .catch((e) => console.warn("SDK ready error:", e));
   }, []);
 
-  const { isConnected, chainId } = useAccount();
+  const { isConnected, chain } = useAccount();
   const { hasNft, isLoading: isLoadingNft } = useHasHammerNft();
 
   if (isCheckingContext) {
@@ -55,7 +56,7 @@ function App() {
     return (
       <div className="h-screen w-full flex flex-col items-center justify-center bg-gray-900 text-white text-center p-4">
         <h1 className="text-3xl font-bold mb-4">Access Denied</h1>
-        <p className="text-xl mb-6">This app can only be used inside a Farcaster client (e.g., Farcaster App).</p>
+        <p className="text-xl mb-6">This app can only be used inside a Farcaster client (e.g., Farcaster App, Base App).</p>
         <a
           href="https://farcaster.xyz/miniapps/NMlQYJwGtue4/critter-holes"
           target="_blank"
@@ -72,7 +73,7 @@ function App() {
     return <ConnectWalletPage />;
   }
   
-  if (chainId !== base.id) {
+  if (chain?.id !== base.id) {
     return <WrongNetworkPage />;
   }
 
@@ -84,33 +85,27 @@ function App() {
     );
   }
 
-  if (hasNft) {
-    return (
-      <Router>
-        <Routes>
+  return (
+    <Router>
+      <Routes>
+        {hasNft ? (
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="game" element={<GamePage />} />
             <Route path="info" element={<InfoPage />} />
-            <Route path="leaderboard" element={<LeaderboardPage />} />
-            <Route path="/mint" element={<Navigate to="/game" />} />
+            <Route path="user" element={<UserPage />} />
+            <Route path="mint" element={<Navigate to="/game" />} />
           </Route>
-        </Routes>
-      </Router>
-    );
-  } 
-  
-  else {
-    return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<MintPromptPage />} />
-          <Route path="/mint" element={<MintPage />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Router>
-    );
-  }
+        ) : (
+          <>
+            <Route path="/" element={<MintPromptPage />} />
+            <Route path="mint" element={<MintPage />} />
+          </>
+        )}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
