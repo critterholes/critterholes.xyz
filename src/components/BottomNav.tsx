@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { IoInformationCircle, IoGameController, IoTrophy } from 'react-icons/io5';
+import { IoInformationCircle, IoGameController, IoPerson } from 'react-icons/io5';
 
 const BottomNav: React.FC = () => {
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -22,10 +22,9 @@ const BottomNav: React.FC = () => {
           <span className="text-xs font-bold">Game</span>
         </NavLink>
         
-
-        <NavLink to="/leaderboard" className={navLinkClass}>
-          <IoTrophy size={28} />
-          <span className="text-xs font-bold">Ranks</span>
+        <NavLink to="/user" className={navLinkClass}>
+          <IoPerson size={28} />
+          <span className="text-xs font-bold">Profile</span>
         </NavLink>
         
       </div>

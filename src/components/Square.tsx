@@ -1,14 +1,21 @@
-import React from 'react';
+import React from "react";
 
 interface SquareProps {
   character: { type: string } | undefined;
   characterImage: string | null;
-  sizeClass: string; 
+  sizeClass: string;
   onClick: () => void;
 }
 
-const Square: React.FC<SquareProps> = ({ character, characterImage, sizeClass, onClick }) => {
-  const characterClass = character ? 'animate-popup opacity-100' : 'opacity-0 scale-50';
+const Square: React.FC<SquareProps> = ({
+  character,
+  characterImage,
+  sizeClass,
+  onClick,
+}) => {
+  const characterClass = character
+    ? "animate-popup opacity-100"
+    : "opacity-0 scale-50";
 
   return (
     <div
@@ -20,7 +27,7 @@ const Square: React.FC<SquareProps> = ({ character, characterImage, sizeClass, o
       {characterImage && (
         <img
           src={characterImage}
-          alt={character?.type || 'character'}
+          alt={character?.type || "character"}
           className={`w-full h-full object-contain transition-all duration-300 ${characterClass} ${sizeClass}
             [filter:drop-shadow(0_10px_5px_rgba(0,0,0,0.4))]`}
         />

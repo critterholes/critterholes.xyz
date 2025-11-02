@@ -1,3 +1,5 @@
+// src/pages/MintPage.tsx
+
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi';

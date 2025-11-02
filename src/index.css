@@ -23,3 +23,7 @@ body {
 .animate-popup {
   animation: popup 0.3s ease-out;
 }
+
+div[data-rk-connect-button] {
+  display: none !important;
+}

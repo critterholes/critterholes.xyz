@@ -10,7 +10,7 @@ const InfoPage: React.FC = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="w-full p-4 pb-24 text-white"
+      className="w-full min-h-screen p-4 pb-24 text-white"
       style={{ backgroundImage: `url(${gameBg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}
     >
       <div className="w-full max-w-4xl mx-auto pt-8">
@@ -47,18 +47,21 @@ const InfoPage: React.FC = () => {
           </div>
 
           <div>
-             <h2 className="text-4xl text-center font-bold text-blue-500 mb-6" style={{ textShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-              Game Economy
-            </h2>
-            <div className="text-lg text-center space-y-3 max-w-3xl mx-auto">
-              <p>
-                <span className="font-bold text-blue-700">$CHP</span> is the main in-game token. It can only be earned by playing the game .
-              </p>
-              <p>
-                <span className="font-bold text-blue-700">$CHP</span> is a non-transferable token between players, or be swapped SOON.
-              </p>
-              
-            </div>
+             <h2 className="text-4xl text-center font-bold text-yellow-300 mb-6" style={{ textShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
+               Game Economy
+             </h2>
+             <div className="text-lg text-center space-y-3 max-w-3xl mx-auto">
+               <p>
+                 <span className="font-bold text-yellow-400">$CHP</span> is the main in-game token, earned based on your score.
+               </p>
+               <p>
+                 You also have a chance to get a random surprise reward: 
+                 either <span className="font-bold text-sky-400">$WCT</span> or <span className="font-bold text-purple-400">$DEGEN</span>!
+               </p>
+               <p>
+                 <span className="font-bold text-yellow-400">$CHP</span> is a non-transferable token between players, but can be swapped SOON.
+               </p>
+             </div>
           </div>
 
         </div>

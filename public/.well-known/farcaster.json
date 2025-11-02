@@ -1,0 +1,26 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjI5NzMzNywidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDk2RjlCMzkzZkZjOGQyODMxODY5QURlNEYzRDBiM0U1ZmRlNDJDYTYifQ",
+    "payload": "eyJkb21haW4iOiJjcml0dGVyaG9sZXMueHl6In0",
+    "signature": "MHhkMjBmMWUxNTgwMjU4YmE3YTQ4MmI4MWZlZWQ5ZjgwN2ViYzA2OGI5OGM2YzAyYjE2MzlhNWE0OTgyYmY1ZjQyMGU1NzkzNmQyZjA4YWI1NjA4OTU4MDE3MTlmZDMwNzkxN2I1MWI2YjQwOGFhZTcxMGEwODFmM2QwYmQ4ZGYxNjFj"
+  },
+  "frame": {
+    "version": "1",
+    "name": "Critter Holes",
+    "iconUrl": "https://critterholes.xyz/icon.png",
+    "homeUrl": "https://critterholes.xyz",
+    "imageUrl": "https://critterholes.xyz/image.png",
+    "buttonTitle": "beat it now",
+    "splashImageUrl": "https://critterholes.xyz/logo.png",
+    "splashBackgroundColor": "#9c5000",
+    "webhookUrl": "https://api.neynar.com/f/app/4bee5972-f7d7-460e-8762-d4dac25e87aa/event",
+    "description": "Critterholes is Mini Game play to Earn point",
+    "primaryCategory": "games",
+    "tags": ["games","play"],
+    "heroImageUrl": "https://critterholes.xyz/image.png",
+    "tagline": "Critterholes",
+    "ogTitle": "Critterholes",
+    "ogDescription": "Critterholes is Mini Game play to Earn point",
+    "ogImageUrl": "https://critterholes.xyz/image.png"
+  }
+}

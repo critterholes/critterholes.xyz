@@ -14,20 +14,22 @@ import moleImg from '/src/assets/mole.webp';
 import skunkImg from '/src/assets/skunk.webp';
 import rabbitImg from '/src/assets/rabbit.webp';
 
-
 interface Character {
   position: number;
   type: string;
   score: number;
 }
 
+interface ClaimResult {
+  rewardTokenSymbol: string;
+  rewardTokenAmount: string;
+}
 
 const characterData = [
   { type: 'mole',   score: 1, image: moleImg,   rarityWeight: 10, sizeClass: 'p-1' },
   { type: 'skunk',  score: 2, image: skunkImg,  rarityWeight: 5,  sizeClass: 'p-3' },
   { type: 'rabbit', score: 3, image: rabbitImg, rarityWeight: 2,  sizeClass: 'p-0' },
 ];
-
 
 const totalRarityWeight = characterData.reduce((sum, char) => sum + char.rarityWeight, 0);
 const getRandomCharacter = () => {
@@ -48,10 +50,8 @@ const GamePage: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState(60); 
   const [activeCharacters, setActiveCharacters] = useState<Character[]>([]);
   const [claimError, setClaimError] = useState<string | null>(null); 
+  const [claimResult, setClaimResult] = useState<ClaimResult | null>(null);
 
-  const { data: playTxHash, writeContract: playContract } = useWriteContract();
-  const { isLoading: isConfirmingPlay, isSuccess: isPlayConfirmed } = useWaitForTransactionReceipt({ hash: playTxHash });
-  
   const { data: claimTxHash, error: claimContractError, isPending: isClaiming, writeContract: claimContract } = useWriteContract();
   const { isLoading: isConfirmingClaim, isSuccess: isClaimed } = useWaitForTransactionReceipt({ hash: claimTxHash });
 
@@ -60,17 +60,17 @@ const GamePage: React.FC = () => {
     abi: gameContractAbi,
     functionName: 'players',
     args: [walletAddress!],
-    query: { enabled: !!walletAddress }
+    query: { enabled: !!walletAddress, staleTime: 5000 }
   });
 
-  const { data: dailyPlayLimit } = useReadContract({
+  const { data: dailyClaimLimit } = useReadContract({
     address: gameContractAddress,
     abi: gameContractAbi,
-    functionName: 'dailyPlayLimit',
+    functionName: 'dailyClaimLimit',
   });
 
-  const playsLeft = dailyPlayLimit !== undefined && playerData !== undefined
-    ? Number(dailyPlayLimit) - Number(playerData[1]) 
+  const playsLeft = dailyClaimLimit !== undefined && playerData !== undefined
+    ? Number(dailyClaimLimit) - Number(playerData[0])
     : 0;
 
   const whackAudio = new Audio(whackSound);
@@ -121,22 +121,13 @@ const GamePage: React.FC = () => {
   }, [gameState, spawnCharacters]);
   
   const handleStartGame = () => {
-    playContract({
-      address: gameContractAddress,
-      abi: gameContractAbi,
-      functionName: 'play',
-    });
-  };
-
-  useEffect(() => {
-    if (isPlayConfirmed) {
-      refetchPlayerData();
-      setScore(0);
-      setTimeLeft(60);
-      setActiveCharacters([]);
-      setGameState('PLAYING');
+    if (playsLeft > 0) {
+        setScore(0);
+        setTimeLeft(60);
+        setActiveCharacters([]);
+        setGameState('PLAYING');
     }
-  }, [isPlayConfirmed, refetchPlayerData]);
+  };
   
   const handleWhack = (index: number) => {
     const whackedCharacter = activeCharacters.find(char => char.position === index);
@@ -149,9 +140,16 @@ const GamePage: React.FC = () => {
   };
   
   const handleClaim = async () => {
-    if (!walletAddress) return setClaimError("Please connect wallet.");
-    if (score <= 0) return setClaimError("You can't claim 0 points.");
+    if (!walletAddress) {
+      setClaimError("Please connect wallet.");
+      return;
+    }
+    if (score <= 0) {
+      setClaimError("You can't claim 0 points.");
+      return;
+    }
     setClaimError(null);
+    setClaimResult(null);
 
     try {
       const response = await fetch('/api/claim', {
@@ -160,13 +158,16 @@ const GamePage: React.FC = () => {
         body: JSON.stringify({ userAddress: walletAddress, score }),
       });
 
+      const responseData = await response.json();
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to get signature.');
+        throw new Error(responseData.error || 'Failed to get signature from backend.');
       }
 
-      const { databytes, v, r, s } = await response.json();
+      const { databytes, v, r, s, rewardTokenSymbol, rewardTokenAmount } = responseData;
       
+      setClaimResult({ rewardTokenSymbol, rewardTokenAmount });
+
       claimContract({
         address: gameContractAddress,
         abi: gameContractAbi,
@@ -175,7 +176,7 @@ const GamePage: React.FC = () => {
       });
 
     } catch (error) {
-      setClaimError(error instanceof Error ? error.message : 'Unknown error.');
+      setClaimError(error instanceof Error ? error.message : 'An unknown error occurred.');
     }
   };
     
@@ -184,6 +185,16 @@ const GamePage: React.FC = () => {
       setClaimError(claimContractError instanceof BaseError ? claimContractError.shortMessage : claimContractError.message);
     }
   }, [claimContractError]);
+
+  useEffect(() => {
+    if (isClaimed) {
+        refetchPlayerData();
+    }
+  }, [isClaimed, refetchPlayerData]);
+
+  const handleResetError = () => {
+    setClaimError(null);
+  };
  
   if (isLoadingNft) {
     return (
@@ -236,17 +247,16 @@ const GamePage: React.FC = () => {
           </div>
           <button
             onClick={handleStartGame}
-            disabled={playsLeft <= 0 || isConfirmingPlay}
+            disabled={playsLeft <= 0}
             className="bg-blue-500 text-white font-bold py-5 px-16 rounded-full text-4xl border-b-8 
                        border-blue-700 transition-all duration-150 transform hover:scale-110 
                        disabled:bg-gray-500 disabled:border-gray-700 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
-            {isConfirmingPlay ? 'Starting...' : (playsLeft > 0 ? 'PLAY' : 'NO PLAYS LEFT')}
+            {playsLeft > 0 ? 'PLAY' : 'NO PLAYS LEFT'}
           </button>
-          {playsLeft <= 0 && !isConfirmingPlay && <p className="mt-4 text-xl">Come back later for more plays!</p>}
+          {playsLeft <= 0 && <p className="mt-4 text-xl">Come back later for more plays!</p>}
         </div>
       )}
-
      
       {(gameState === 'PLAYING' || gameState === 'GAME_OVER') && (
         <div className="grid grid-cols-4 gap-4">
@@ -274,6 +284,8 @@ const GamePage: React.FC = () => {
           isConfirming={isConfirmingClaim}
           isClaimed={isClaimed}
           claimError={claimError}
+          claimResult={claimResult}
+          onResetError={handleResetError}
         />
       )}
     </div>
