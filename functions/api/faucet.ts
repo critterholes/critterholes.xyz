@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 
 export interface Env {
-  DEGEN_RPC_URL: string;
+  BASE_RPC_URL: string;
   FAUCET_CONTRACT_ADDRESS: string;
   DEV_PRIVATE_KEY: string;
 }
@@ -22,7 +22,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       });
     }
 
-    const provider = new ethers.JsonRpcProvider(env.DEGEN_RPC_URL);
+    const provider = new ethers.JsonRpcProvider(env.BASE_RPC_URL);
 
     const devWallet = new ethers.Wallet(env.DEV_PRIVATE_KEY, provider);
 
@@ -44,10 +44,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       devWallet
     );
 
-    console.log(`Memproses faucet untuk: ${userAddress}`);
+    console.log(`Processing faucet for: ${userAddress}`);
     const tx = await faucetContract.requestFaucet(userAddress);
 
-    console.log(`Faucet berhasil dikirim! Tx hash: ${tx.hash}`);
+    console.log(`Faucet successfully sent Tx hash: ${tx.hash}`);
 
     return new Response(
       JSON.stringify({

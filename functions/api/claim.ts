@@ -7,12 +7,12 @@ interface RequestBody {
 
 interface Env {
   SIGNER_PRIVATE_KEY: string;
-  WCT_TOKEN_ADDRESS: string;
-  DEGEN_TOKEN_ADDRESS: string;
-  BASE_RPC_URL: string; 
+  ETHIX_TOKEN_ADDRESS: string;
+  G_TOKEN_ADDRESS: string;
+  CELO_RPC_URL: string; 
 }
 
-const NFT_CONTRACT = "0x49FDb7C8C9c19E4ac93331139B6C15b713f438B1";
+const NFT_CONTRACT = "0xabc9638d177c6f4061718cdff05d815ef98a4af4";
 
 const ERC1155_ABI = [
   "function balanceOf(address account, uint256 id) view returns (uint256)"
@@ -32,12 +32,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     const {
       SIGNER_PRIVATE_KEY,
-      WCT_TOKEN_ADDRESS,
-      DEGEN_TOKEN_ADDRESS,
-      BASE_RPC_URL,
+      ETHIX_TOKEN_ADDRESS,
+      G_TOKEN_ADDRESS,
+      CELO_RPC_URL,
     } = context.env;
 
-    if (!SIGNER_PRIVATE_KEY || !WCT_TOKEN_ADDRESS || !DEGEN_TOKEN_ADDRESS || !BASE_RPC_URL) {
+    if (!SIGNER_PRIVATE_KEY || !ETHIX_TOKEN_ADDRESS || !G_TOKEN_ADDRESS || !CELO_RPC_URL) {
       return Response.json(
         { error: "Backend environment not configured correctly" },
         { status: 500 }
@@ -52,7 +52,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
 
     
-    const provider = new ethers.JsonRpcProvider(BASE_RPC_URL);
+    const provider = new ethers.JsonRpcProvider(CELO_RPC_URL);
     const nft = new ethers.Contract(NFT_CONTRACT, ERC1155_ABI, provider);
     const balance = await nft.balanceOf(userAddress, 1); 
 
@@ -67,12 +67,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const signer = new ethers.Wallet(SIGNER_PRIVATE_KEY);
 
     const isWCT = Math.random() < 0.5;
-    const rewardTokenAddress = isWCT ? WCT_TOKEN_ADDRESS : DEGEN_TOKEN_ADDRESS;
-    const rewardTokenSymbol = isWCT ? "WCT" : "DEGEN";
+    const rewardTokenAddress = isWCT ? ETHIX_TOKEN_ADDRESS : G_TOKEN_ADDRESS;
+    const rewardTokenSymbol = isWCT ? "ETHIX" : "G";
     let randomAmount;
 
     if (isWCT) {
-      randomAmount = 0.05 + Math.random() * (0.1 - 0.05);
+      randomAmount = 0.05 + Math.random() * (0.05 - 0.01);
     } else {
       randomAmount = 3 + Math.random() * 2;
     }

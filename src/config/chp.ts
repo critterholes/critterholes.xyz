@@ -1,6 +1,6 @@
 // src/config/chp.ts
 
-export const chpContractAddress = '0xC1C16700617C716323B5587e037f33259b88A051';
+export const chpContractAddress = '0x19D888b3E1f5d32a1F9bFaB5de3617325180DE5B';
 
 export const chpContractAbi = [
   {

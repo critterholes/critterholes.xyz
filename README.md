@@ -1,10 +1,10 @@
-# 🎮 CritterHoles Official 🎮
+# 🎮 CRITTERHOLES OFFICIAL 🎮
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript)
 ![Vite](https://img.shields.io/badge/Vite-7.0-646CFF?logo=vite)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1-38BDF8?logo=tailwindcss)
-![Base](https://img.shields.io/badge/Base-Mainnet-35D07F?logo=base)
+![Base](https://img.shields.io/badge/Base-Mainnet-35D07F?logo=Base)
 ![Reown](https://img.shields.io/badge/Reown-AppKit-8A2BE2?logo=walletconnect)
 ![Wagmi](https://img.shields.io/badge/Wagmi-2.16-FF9900?logo=ethereum)
 ![Farcaster](https://img.shields.io/badge/Farcaster-MiniApp-6F00FF?logo=farcaster)
@@ -15,12 +15,12 @@
 
 ## 🎮 Overview 
 
-**CritterHoles** is a blockchain-based casual game built on **Base Mainnet**, where players whack critters, earn points, and claim on-chain rewards.  
+**CritterHoles on Base** is a blockchain-based casual game built on **Base Mainnet**, where players whack critters, earn points, and claim on-chain rewards.  
 The game uses **React + TypeScript + Vite** with **Reown AppKit**, **wagmi**, and a Cloudflare backend for claim verification.
 
 ---
 
-## [DEMO ON FARCASTER](https://farcaster.xyz/miniapps/eK5FT3tFgDQg/critter-holes)
+## [DEMO ON FARCASTER](https://farcaster.xyz/miniapps/eK5FT3tFgDQg/critter-holes-on-Base)
 
 ## 🧩 Gameplay
 
@@ -71,7 +71,7 @@ You must own a **Hammer NFT** to play. Mint one on the **Mint Page** using the `
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/hihenluo/Critterholes.xyz.git
+git clone https://github.com/hihenluo/Critterholes.git
 cd Critterholes
 ```
 
@@ -87,9 +87,9 @@ In the `functions/` directory, create an `.env` file:
 
 ```bash
 SIGNER_PRIVATE_KEY=your_private_key
-WCT_TOKEN_ADDRESS=your_ethix_token_address
-DEGEN_TOKEN_ADDRESS=your_gooddollar_token_address
-BASE_RPC_URL=
+ETHIX_TOKEN_ADDRESS=your_ethix_token_address
+G_TOKEN_ADDRESS=your_gooddollar_token_address
+Base_RPC_URL=https://forno.Base.org
 ```
 
 > These variables are used by the Cloudflare Function `/api/claim` to sign reward claims and interact with Base smart contracts.
@@ -145,9 +145,9 @@ npx wrangler deploy
 
 ## 🔗 Useful Links
 
-- 🎮 [Main Game Repo](https://github.com/hihenluo/Critterholes)
+- 🎮 [Main Game Repo](https://github.com/hihenluo/Critterholes-on-Base)
 - 💻 [Smart Contract Repo (Hardhat)](https://github.com/hihenluo/hardhat)
-- 🟦 [Base Network](https://base.org/)
+- 💚 [Base Network](https://Base.org/)
 - 🔐 [Reown AppKit](https://reown.io/)
 - 🌐 [Cloudflare Pages](https://developers.cloudflare.com/pages/)
 
@@ -155,7 +155,7 @@ npx wrangler deploy
 
 ## 📜 License
 
-Licensed under the [MIT License](https://github.com/hihenluo/Critterholes/blob/main/LICENSE.md)
+Licensed under the [MIT License](https://github.com/hihenluo/Critterholes-on-Base/blob/main/LICENSE.md)
 
 ---
 

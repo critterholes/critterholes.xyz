@@ -19,15 +19,13 @@ createAppKit({
   projectId,
   metadata: {
     name: "Critter Hole",
-    description: "Critter Hole Game on Base",
-    url: "https://assets-dhl.pages.dev/",
-    icons: ["https://assets-dhl.pages.dev//logo.png"],
+    description: "Critter Hole Game",
+    url: "https://critterholes.xyz/",
+    icons: ["https://critterholes.xyz/icon.png"],
   },
   features: {
-    history: false,
-    send: true,
   },
-  themeMode: "dark",
+  themeMode: "light",
 });
 
 export const config = wagmiAdapter.wagmiConfig;

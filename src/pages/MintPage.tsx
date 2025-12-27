@@ -1,11 +1,11 @@
-// src/pages/MintPage.tsx
-
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi';
 import { nftContractAddress, nftAbi } from '../config/nft';
-import { BaseError } from 'viem';
+import { BaseError, formatEther } from 'viem';
 import gameBg from '/src/assets/game-bg.jpg';
+
+const BASE_NFT_ID = 0n;
 
 const MintPage: React.FC = () => {
   const navigate = useNavigate();
@@ -13,11 +13,15 @@ const MintPage: React.FC = () => {
 
   const { data: hash, error: mintError, isPending: isMinting, writeContract } = useWriteContract();
 
- 
-  const { data: mintPrice, isLoading: isMintPriceLoading } = useReadContract({
+  const { 
+    data: mintPrice, 
+    isLoading: isMintPriceLoading, 
+    isError: isMintPriceError 
+  } = useReadContract({
     address: nftContractAddress,
     abi: nftAbi,
-    functionName: 'mintPrice',
+    functionName: 'levelPrices',
+    args: [BASE_NFT_ID],
   });
 
   const handleMint = () => {
@@ -25,14 +29,16 @@ const MintPage: React.FC = () => {
       alert("Please connect your wallet first.");
       return;
     }
-    if (typeof mintPrice === 'undefined') {
+    
+    if (typeof mintPrice === 'undefined' || isMintPriceError) {
       alert("Could not read mint price. Please refresh the page and try again.");
       return;
     }
+
     writeContract({
       address: nftContractAddress,
       abi: nftAbi,
-      functionName: 'mint',
+      functionName: 'mintBase',
       value: mintPrice,
     });
   };
@@ -49,6 +55,8 @@ const MintPage: React.FC = () => {
     }
   }, [isConfirmed]);
   
+  const mintPriceEth = mintPrice ? formatEther(mintPrice) : 'Loading...';
+
   return (
     <div 
       className="h-screen flex flex-col items-center justify-center p-4 text-white"
@@ -58,18 +66,20 @@ const MintPage: React.FC = () => {
         backgroundPosition: 'center'
       }}
     >
-      <h1 className="text-4xl font-bold mb-4">Mint a Hammer on Base</h1>
+      <h1 className="text-4xl font-bold mb-4">Mint a Hammer on Celo</h1>
       <p className="text-xl mb-8">You need a hammer NFT to play Critter Hole.</p>
       
+      <p className="text-3xl font-semibold mb-6">Price: {isMintPriceLoading ? 'Loading...' : `${mintPriceEth} CELO`}</p>
+
       <button
         onClick={handleMint}
-        disabled={isMinting || isConfirming || isMintPriceLoading}
+        disabled={isMinting || isConfirming || isMintPriceLoading || isMintPriceError}
         className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 
                    text-white font-bold py-4 px-10 rounded-full text-2xl border-b-8 
                    border-blue-700 hover:border-blue-800 transition-all duration-150 
                    transform hover:scale-105 disabled:bg-gray-500 disabled:border-gray-700 disabled:cursor-not-allowed"
       >
-       
+        
         {isMinting ? 'Confirm in wallet...' : isConfirming ? 'Minting...' : 'Mint Hammer'}
       </button>
 

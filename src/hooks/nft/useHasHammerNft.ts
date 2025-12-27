@@ -1,7 +1,7 @@
 // src/hooks/useHasHammerNft.ts
 
 import { useAccount, useReadContract } from 'wagmi';
-import { nftContractAddress, nftAbi } from '../config/nft';
+import { nftContractAddress, nftAbi } from '../../config/oldnft';
 
 export const useHasHammerNft = () => {
   const { address, isConnected } = useAccount();

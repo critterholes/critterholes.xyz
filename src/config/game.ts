@@ -1,6 +1,6 @@
 // src/config/game.ts
 
-export const gameContractAddress = '0x8e5cc6B61E7aC9631934dD422301914ac5761524';
+export const gameContractAddress = '0x0EaB0b5a27A6587bD77e304eA2d50B4D95C48346';
 
 export const gameContractAbi = [
   {

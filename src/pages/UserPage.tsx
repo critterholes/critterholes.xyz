@@ -1,8 +1,7 @@
 // src/pages/UserPage.tsx
-
 import React from 'react';
 import { useAccount, useReadContract } from 'wagmi';
-import { useFarcasterAccount } from '../hooks/useFarcasterAccount';
+import { useFarcasterAccount } from '../hooks/farcaster/useFarcasterAccount';
 import { chpContractAddress, chpContractAbi } from '../config/chp';
 import gameBg from '/src/assets/game-bg.jpg';
 import { Link } from 'react-router-dom';
@@ -22,8 +21,6 @@ export const UserPage: React.FC = () => {
     }
   });
 
-  
-
   return (
     <div
       className="h-screen w-full flex flex-col items-center justify-center p-4 text-white"
@@ -36,7 +33,7 @@ export const UserPage: React.FC = () => {
       <div className="relative flex flex-col items-center bg-black/50 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/20 w-full max-w-md">
         
        
-        <Link to="/game" className="absolute top-4 right-4 text-2xl text-white/50 hover:text-white transition-colors">
+        <Link to="/" className="absolute top-4 right-4 text-2xl text-white/50 hover:text-white transition-colors">
           &times;
         </Link>
 

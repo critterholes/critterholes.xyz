@@ -1,4 +1,6 @@
+// src/pages/InfoPage.tsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 import gameBg from '/src/assets/game-bg.jpg';
 import moleImg from '/src/assets/mole.webp';
 import skunkImg from '/src/assets/skunk.webp';
@@ -10,9 +12,15 @@ const InfoPage: React.FC = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="w-full min-h-screen p-4 pb-24 text-white"
+      className="w-full min-h-screen p-4 pb-24 text-white relative"
       style={{ backgroundImage: `url(${gameBg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}
     >
+      <Link to="/" className="absolute top-4 left-4 z-50 bg-black/50 p-3 rounded-full text-white hover:bg-black/80 transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+      </Link>
+
       <div className="w-full max-w-4xl mx-auto pt-8">
         <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-8 border-4 border-yellow-800/50 space-y-8">
           
@@ -56,7 +64,7 @@ const InfoPage: React.FC = () => {
                </p>
                <p>
                  You also have a chance to get a random surprise reward: 
-                 either <span className="font-bold text-sky-400">$WCT</span> or <span className="font-bold text-purple-400">$DEGEN</span>!
+                 either <span className="font-bold text-green-400">$ETHIX</span> or <span className="font-bold text-sky-400">$GoodDollar</span>!
                </p>
                <p>
                  <span className="font-bold text-yellow-400">$CHP</span> is a non-transferable token between players, but can be swapped SOON.
