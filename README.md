@@ -87,9 +87,9 @@ In the `functions/` directory, create an `.env` file:
 
 ```bash
 SIGNER_PRIVATE_KEY=your_private_key
-ETHIX_TOKEN_ADDRESS=your_ethix_token_address
-G_TOKEN_ADDRESS=your_gooddollar_token_address
-Base_RPC_URL=https://forno.Base.org
+WCT_TOKEN_ADDRESS=your_WCT_token_address
+DEGEN_TOKEN_ADDRESS=your_DEGEN_token_address
+BASE_RPC_URL=https://forno.Base.org
 ```
 
 > These variables are used by the Cloudflare Function `/api/claim` to sign reward claims and interact with Base smart contracts.
