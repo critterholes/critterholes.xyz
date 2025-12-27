@@ -1,180 +1,163 @@
+# 🎮 CritterHoles Official 🎮
 
-<div align="center">
-
-# 🕳️ Critterholes
-
-### A Web3 Play-to-Earn Game built with React + TypeScript + Vite
-
-Whack the critters, earn tokens, and climb your way up the leaderboard!  
-Fast, fun, and fully on-chain — **Critterholes** brings classic gameplay into the world of Web3. 🪙🐹
-
-## Link Game 
-
-https://farcaster.xyz/miniapps/NMlQYJwGtue4/critter-holes
-
----
-
-[![Made with Vite](https://img.shields.io/badge/Made%20with-Vite-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![Deploy on Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://vercel.com/)
-
-</div>
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript)
+![Vite](https://img.shields.io/badge/Vite-7.0-646CFF?logo=vite)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1-38BDF8?logo=tailwindcss)
+![Base](https://img.shields.io/badge/Base-Mainnet-35D07F?logo=base)
+![Reown](https://img.shields.io/badge/Reown-AppKit-8A2BE2?logo=walletconnect)
+![Wagmi](https://img.shields.io/badge/Wagmi-2.16-FF9900?logo=ethereum)
+![Farcaster](https://img.shields.io/badge/Farcaster-MiniApp-6F00FF?logo=farcaster)
+![Cloudflare](https://img.shields.io/badge/Cloudflare-Functions-F38020?logo=cloudflare)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ---
 
-## 🎮 Gameplay Overview
+## 🎮 Overview 
 
-In **Critterholes**, your goal is simple — **whack as many critters as you can before the timer runs out!**
+**CritterHoles** is a blockchain-based casual game built on **Base Mainnet**, where players whack critters, earn points, and claim on-chain rewards.  
+The game uses **React + TypeScript + Vite** with **Reown AppKit**, **wagmi**, and a Cloudflare backend for claim verification.
 
-Each critter type gives a different score. The faster your reaction, the more you earn!
+---
 
-### 🐾 Critter Points
+## [DEMO ON FARCASTER](https://farcaster.xyz/miniapps/eK5FT3tFgDQg/critter-holes)
 
-| Critter | Image | Points |
-|----------|--------|---------|
-| 🐹 **Mole** | <img src="src/assets/mole.webp" alt="Mole" width="48"/> | **1 Point** |
-| 🦨 **Skunk** | <img src="src/assets/skunk.webp" alt="Skunk" width="48"/> | **2 Points** |
-| 🐰 **Rabbit** | <img src="src/assets/rabbit.webp" alt="Rabbit" width="48"/> | **3 Points** |
+## 🧩 Gameplay
 
-⏱️ *Be quick — the clock is ticking!*
+### 🎯 Objective
+- Hit critters as they pop up before time runs out.
+- Each critter type gives different scores based on rarity:
+
+| Critter | Image | Points | Rarity |
+|----------|--------|---------|---------|
+| 🐹 Mole | ![mole](./src/assets/mole.webp) | 1 | Common |
+| 🦨 Skunk | ![skunk](./src/assets/skunk.webp) | 2 | Uncommon |
+| 🐇 Rabbit | ![rabbit](./src/assets/rabbit.webp) | 3 | Rare |
+
+### 🪓 Requirement
+You must own a **Hammer NFT** to play. Mint one on the **Mint Page** using the `mint()` function in the Base contract.
+
+### 💰 Rewards
+- After the game ends, scores are converted into `$CHP` tokens.
+- Random rewards include `$WCT` or `$DEGEN`.
+- Players have a **daily claim limit**, read from the contract.
+- Claims are verified through a Cloudflare Function at `/api/claim`.
 
 ---
 
 ## 🪙 Game Economy
 
-Your score determines the amount of tokens you earn.
-
-- 🟡 **$CHP** — The main in-game token, earned from your score.  
-- 🔵 **$WCT** / 🟣 **$DEGEN** — Random surprise rewards!  
-- ⚠️ **$CHP** is currently non-transferable between players, but a swap feature is **coming soon**.
-
-Play, earn, and collect tokens in every round!
+- `$CHP` — main in-game point token.  
+- `$WCT` and `$DEGEN` — bonus tokens randomly distributed.  
+- Smart contracts are managed in the [Hardhat repository](https://github.com/hihenluo/hardhat).
 
 ---
 
-## ✨ Key Features
+## ⚙️ Architecture
 
-- ⚡ **Fast Web Gameplay** — Powered by React + Vite for smooth and instant performance.  
-- 🎮 **Addictive Tap Mechanics** — Whack, score, and compete.  
-- 🪙 **Play-to-Earn Integration** — Rewards based on your gameplay.  
-- 💫 **Framer Motion Animations** — Clean and dynamic UI transitions.  
-- 🌐 **Web3 Ready** — Supports wallet login (MetaMask, Farcaster, etc).  
-- 🎨 **Fully Customizable UI** — Simple to tweak or redesign with TailwindCSS.  
+| Layer | Description |
+|-------|--------------|
+| **Frontend** | React 19 + TypeScript + Vite 7 |
+| **Blockchain** | Base Mainnet |
+| **Wallet Integration** | Reown AppKit + wagmi + viem |
+| **Backend** | Cloudflare Functions (`/functions/claim.ts`) |
+| **UI Framework** | TailwindCSS + Framer Motion |
+| **MiniApp** | Farcaster integration |
 
 ---
 
-## 🚀 Quick Start (Local Setup)
+## 🧑‍💻 Setup & Development
 
-Make sure you have **Node.js 18+** and **npm** or **yarn** installed.
+### 1️⃣ Clone the Repository
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/hihenluo/assets.git
-cd assets
+git clone https://github.com/hihenluo/Critterholes.xyz.git
+cd Critterholes
+```
 
-# 2. Install dependencies
+### 2️⃣ Install Dependencies
+
+```bash
 npm install
-# or
-yarn install
+```
 
-# 3. Run the development server
-npm run dev
+### 3️⃣ Environment Variables
 
-,,,
+In the `functions/` directory, create an `.env` file:
+
+```bash
+SIGNER_PRIVATE_KEY=your_private_key
+WCT_TOKEN_ADDRESS=your_ethix_token_address
+DEGEN_TOKEN_ADDRESS=your_gooddollar_token_address
+BASE_RPC_URL=
+```
+
+> These variables are used by the Cloudflare Function `/api/claim` to sign reward claims and interact with Base smart contracts.
 
 ---
 
+## 🚀 Run the Game
 
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Start Development Server
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Build for Production
+```bash
+npm run build
 ```
 
-# 🤝 Contributing
+### Preview Production Build
+```bash
+npm run preview
+```
 
-We welcome all contributions! 🎉
+---
 
-1. Fork this repository
+## ☁️ Cloudflare Function
 
-2. Create your branch (feature/your-feature)
+### `/functions/claim.ts`
 
-3. Commit your changes
+Handles reward claiming logic:
+- Validates connected wallet and score.
+- Generates and returns claim signature (`v`, `r`, `s`, `databytes`).
+- Interacts with Base contracts to confirm reward eligibility.
 
-4. Open a Pull Request
+Deploy to Cloudflare with:
 
-You can:
+```bash
+npx wrangler deploy
+```
 
-- Improve the UI/UX
+---
 
-- Add sound effects or animations
+## 🧠 Game Flow Summary
 
-- Introduce new critters or difficulty modes
+1. Player connects wallet using Reown.  
+2. System checks Hammer NFT ownership.  
+3. If missing, mint one before playing.  
+4. During the game, player earns points.  
+5. After game ends, claim reward via `/api/claim`.  
+6. Backend signs transaction and executes `claim()` on-chain.  
 
-- Integrate wallet connection or leaderboard
+---
+
+## 🔗 Useful Links
+
+- 🎮 [Main Game Repo](https://github.com/hihenluo/Critterholes)
+- 💻 [Smart Contract Repo (Hardhat)](https://github.com/hihenluo/hardhat)
+- 🟦 [Base Network](https://base.org/)
+- 🔐 [Reown AppKit](https://reown.io/)
+- 🌐 [Cloudflare Pages](https://developers.cloudflare.com/pages/)
+
+---
+
+## 📜 License
+
+Licensed under the [MIT License](https://github.com/hihenluo/Critterholes/blob/main/LICENSE.md)
+
+---
+
+### 💫 Built with ❤️ by the CritterHoles Team  
+_on Base Mainnet • Powered by Reown & Farcaster_
